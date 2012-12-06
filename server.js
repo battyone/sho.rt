@@ -6,7 +6,6 @@ var express = require("express")
 var server = express();
 // Server settings
 var host = 'localhost', port = 8080;
-var root = "./www", alt = "./gen";
 
 server.use(express.static(__dirname + "/www"));
 server.post("/", function(request, response){
