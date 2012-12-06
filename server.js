@@ -1,18 +1,16 @@
-var http = require("http"), fs = require("fs");
-var server = require("express")();
-var root = ".";
-//var path = 
-// Begin GET routers
-server.get("/", function(request, response){
-  request.on("end", function(){
-    console.log(request.headers);
-  });
+// NODE Libraries
+var http = require("http"), fs = require("fs"), url = require("url"), 
+  path = require("path");
+// Express.js
+var express = require("express")
+var server = express();
+// Server settings
+var host = 'localhost', port = 8080;
+var root = "./www", alt = "./gen";
+
+server.use(express.static(__dirname + "/www"));
+server.post("/", function(request, response){
+  console.log(request);
 });
 
-server.get("..", function(request, response){
-  request.on("end", function(){
-    // send Invalid request page/header
-  });
-});
-// End GET routers
-server.listen(8080);
+server.listen(port, host);
