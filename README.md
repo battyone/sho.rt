@@ -7,6 +7,7 @@ A lightweight URL shortener
 * Node.js v0.8.15
 * Express.io v3.0.3
 * Redis.io v0.8.2
+* jQuery v1.8.3 \[included\]
 
 ## TODO
 * Finish writing the server code
