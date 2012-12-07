@@ -11,12 +11,12 @@
   </head>
   <body>
     <div id="form">
-      <form name="target" action="/" method="post">
+      <form action="/" method="post" id="formdata">
         <fieldset>
           <legend></legend>
           <input type="hidden" name="action" value="shorten">
-          <label for="url"><!--enter the url --></label><input type="text" id="url" />
-          <input type="submit" value="sho.rt">
+          <label for="url"><!--enter the url --></label><input type="text" id="url" name="url"/>
+          <input type="submit" id="submit" value="sho.rt">
         </fieldset>
       </form>
     </div>
