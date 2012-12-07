@@ -12,6 +12,8 @@ A lightweight URL shortener
 ## TODO
 * Finish writing the server code
 * Prepare pages to be served with HTTP Status Codes for responses other than 200
+* ~~Make async POST requests~~
+* ~~Handle POST requests~~
 * Write the actual shortener
 
 ## Structure
