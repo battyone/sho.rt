@@ -1,6 +1,8 @@
-// 1: OK
-// 2: Invalid Protocol (for now, only HTTP is allowed)
-// 3: URL too short (set minUrlLength to specify this)
+/* Response codes
+ 1: OK
+ 2: Invalid Protocol (for now, only HTTP is allowed)
+ 3: URL too short (set minUrlLength to specify this, currently at 25)
+*/
 var url = require("url"), path = require("path");
 // Express.js / Redis.io
 var express = require("express");
@@ -26,13 +28,14 @@ function processRequest(request) {
       (request.body.url.length > minUrlLength)){
     var p = url.parse(request.body.url);
     if (p.protocol === undefined || p.protocol == "http:"){
-  //    var db = redis.createClient();
+      var db = redis.createClient();
       console.log(p);
-      var s = p['href'];
       r.mcd = 1;
-      r.msg = path.join(host, Short.encode(next++));
+      var s = Short.encode(next++);
+      r.msg = path.join(host, s);
       console.log(r.msg);
-  //    db.set(
+      db.set(s, p.href);
+      db.quit();
       console.log(JSON.stringify(r));
     } else {
       //Invalid protocol
@@ -52,6 +55,15 @@ Serve = function(){
 };
 
 server.use(function(request, response, next) {
-  response.send(404);
+  var db = redis.createClient(6379);
+  db.get(request.url.slice(1), function(err, reply){
+    if (err){
+      response.send(404);
+    } else {
+      response.redirect(reply);
+    }
+    console.log(reply);
+    response.end();
+  });
 });
 server.listen(port, host);
