@@ -12,7 +12,7 @@ Base64 = (function(){
     assert(Number(number) !== Number.POSITIVE_INFINITY && number !==null &&
           !isNaN(Number(number)), "Invalid input. Detected NaN, Inf or null");
     var s = "";
-    var remainder = parseInt(number);
+    var remainder = parseInt(number*64);
     while (remainder !== 0) {
       s += _key.charAt(remainder % 64);
       remainder = Math.floor(remainder / 64);
