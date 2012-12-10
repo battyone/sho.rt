@@ -17,8 +17,8 @@ a JSON string containing a code and a short message
 * ~~Make async POST requests~~
 * ~~Handle POST requests~~
 * ~~Write the actual shortener~~
-* Log shortened URLs to redis
-* Redirect shortened URLs
+* ~~Log shortened URLs to redis~~
+* ~~Redirect shortened URLs~~
 
 ## Response Codes
 The JSON object contains the keys mcd \(message code\) and msg \(msg\). Samples:
