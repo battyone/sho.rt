@@ -5,38 +5,36 @@
 */
 var url = require("url"), path = require("path");
 // Express.js / Redis.io
-var express = require("express");
-var server = express();
-var redis = require("redis");
+var express = require("express"),
+    redis = require("redis"),
+    server = express();
 // Local settings
-var host = 'localhost', port = 80, next = 16777216, minUrlLength = 25;
-require("./sho.rt");
-var Short = new Base64();
+var host = 'localhost', port = 80,
+    next = 16777216, minUrlLength = 25;
+var base = require("./base64");
 server.use(express.static(__dirname + "/www")); // Sets directory
 server.use(express.bodyParser()); // Handles JSON, multipart, urlencoding
 // Handle POST requests sent to /
 server.post("/", function(request, response){
-  var r = processRequest(request);
-  response.write(JSON.stringify(r));
+  response.write(processRequest(request));
   response.end();
 });
 
-// Handles a shorten request. Returns a Serve object
+// Handles a shorten request. Returns a Stringified JSON object
 function processRequest(request) {
   var r = new Serve();
-  if((request.body.action.toLowerCase() === "shorten") &&
+  if((request.body.action.toLowerCase() == "shorten") &&
       (request.body.url.length > minUrlLength)){
     var p = url.parse(request.body.url);
     if (p.protocol === undefined || p.protocol == "http:"){
       var db = redis.createClient();
       console.log(p);
       r.mcd = 1;
-      var s = Short.encode(next++);
+      var s = base.encode(next++);
       r.msg = path.join(host, s);
       console.log(r.msg);
       db.set(s, p.href);
       db.quit();
-      console.log(JSON.stringify(r));
     } else {
       //Invalid protocol
       r.mcd = 2;
@@ -46,7 +44,7 @@ function processRequest(request) {
     r.mcd = 3;
     r.msg = "URL too short";
   }
-  return r;
+  return JSON.stringify(r);
 }
 
 Serve = function(){
